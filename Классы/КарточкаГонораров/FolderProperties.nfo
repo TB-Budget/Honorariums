@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Properties Version="1">
+  <Property Name="Title" Value="вспомогательные классы"/>
+</Properties>
+<Items>
+  <Item Name="клРеквизитыСубъекта"/>
+  <Item Name="клТегСтолбца"/>
+  <Item Name="клТегСтроки"/>
+</Items>

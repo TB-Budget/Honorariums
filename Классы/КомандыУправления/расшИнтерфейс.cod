@@ -1,0 +1,31 @@
+extends МашинаРеквизитов.КомандыУправления.Интерфейс;
+
+import МашинаРеквизитов;
+
+inclass public
+
+  --ИконкаСправочник: string = BaseInfo.ProjectByName['ТББ_Базовый'].Folder + 'Приложения\Иконки\Справочник';
+  --ИконкаДокумент: string = BaseInfo.ProjectByName['ТББ_Базовый'].Folder + 'Приложения\Иконки\Документ';
+  --ИконкаОтчетTpl: string = BaseInfo.ProjectByName['ТББ_Базовый'].Folder + 'Приложения\Иконки\ReportTpl';
+
+  proc СоздатьКоманды;
+    var IconsBasePath: string;
+    IconsBasePath = BaseInfo.ProjectByName['ТББ_Базовый'].Folder + 'Приложения\Иконки\';
+    extended СоздатьКоманды;
+    with КомандыУправления.ОткрытьКартотеку do
+      Добавить('ГОНОРАРЫ.Отчетность.Карточки.УчетГ', 'Карточки учета гонораров', ТББ_УчетГонораров.Документы.Зарплата.картКарточкиГонораров, nil, IconsBasePath + 'Справка');
+    end;
+  end;
+
+  proc СоздатьПанели;
+    var IconsBasePath: string;
+    IconsBasePath = BaseInfo.ProjectByName['ТББ_Базовый'].Folder + 'Приложения\Иконки\';
+    extended СоздатьПанели;
+    with КомандыУправления.ПанельКоманд.Взять('ЗПиДД.Справки', 'Справки', IconsBasePath + 'Справка', 46) do
+      with ВзятьГруппу('Внутренние документы') do
+        ДобавитьКоманды(['ГОНОРАРЫ.Отчетность.Карточки.УчетГ']);
+      end;
+    end;
+  end;
+
+end
