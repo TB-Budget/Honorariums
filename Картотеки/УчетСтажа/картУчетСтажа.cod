@@ -1,0 +1,57 @@
+class inherited ТББ_Базовый.Базовые.картБазовая "Учет стажа по договорам авторского заказа";
+
+inclass private
+
+  stored var ГодСв: integer;
+  var ПолеСтолбцаНаше: String:= 'НашеУчреждение.Имя';
+
+InObject private
+
+  var ГодСвОбъекта: integer;
+  var НашеУчреждение: Базовый.Данные.Субъект;
+
+
+
+--{{ Обработчики событий клеток шаблона
+
+  proc Поле_ПриВыходе(Cell: TemplateCell; Index: Integer);
+    if (Cell.Contents = 'НашеУчреждение'):
+      ОбновитьФильтр;
+      Template.CellByField['ГодСвОбъекта'].SetFocus;
+    elsif (Cell.Contents = 'ГодСвОбъекта'):
+      ГодСв = ГодСвОбъекта;
+      ОбновитьФильтр;
+    fi;
+  end;
+
+  func Поле_ПриВыводе(Cell: TemplateCell; Value: Variant; Action: Template.OutputTypes; var Format: String): Variant;
+    if (Cell.Contents = 'НашеУчреждение'):
+      if Cell.Value = nil:
+        Result = '<i+><cf:Gray>Все учреждения';
+      else
+        Result = НашеУчреждение.Наим;
+      fi;
+    elsif (Cell.Contents = 'ГодСвОбъекта'):
+      if Cell.Value = nil:
+        Result = '<i+><cf:Gray>Все';
+      else
+        Result = ГодСвОбъекта;
+      fi;
+    fi;
+  end;
+--}}
+
+
+--{{ Обработчики событий прочих объектов шаблона
+
+  --@doc  Создание / обновление карточек
+  proc кнОбновить_ПриНажатии (Sender: Button);
+    if (НашеУчреждение <> nil) and (ГодСвОбъекта > 0):
+    else
+      Message('Пожалуйста, укажите учреждение и год, за который создаются / обновляются карточки!');
+    fi;
+  end;
+--}}
+
+
+end
