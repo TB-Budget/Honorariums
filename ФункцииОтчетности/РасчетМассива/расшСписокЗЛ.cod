@@ -1,0 +1,25 @@
+extends Бюджет_ЗПиДД.РасчетМассива.РСВ1.СписокЗЛ;
+
+inclass public
+
+  func Расчет(aParameter: Variant[]): Variant;
+    --СохранитьЗначениеПоляВОтчет(aParameter: Variant[]; _локИмяПоля: string; _локЗначениеПоля: variant);
+    var СтажНС1: logical;
+    var СтажНС2: logical;
+    var СтажНС3: logical;
+    var СтажНС4: logical;
+    var СтажГПС: logical;
+    --
+    СтажНС1 = ЗначениеПоляОтчета(aParameter, 'л:СтажНС1');
+    СтажНС2 = ЗначениеПоляОтчета(aParameter, 'л:СтажНС2');
+    СтажНС3 = ЗначениеПоляОтчета(aParameter, 'л:СтажНС3');
+    СтажНС4 = ЗначениеПоляОтчета(aParameter, 'л:СтажНС4');
+    СтажГПС = ЗначениеПоляОтчета(aParameter, 'л:СтажГПС');
+    if not true in [СтажНС1,СтажНС2,СтажНС3,СтажНС4,СтажГПС]:
+      Result = extended Расчет(aParameter);
+    else
+      Result = [[nil]];
+    fi;
+  end;
+
+end
