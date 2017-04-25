@@ -1,0 +1,109 @@
+class inherited ћашина–еквизитов.Ѕазовые.инт«апись "»нтерфейс записи";
+
+Import —»—2 Classes »сключени€, ‘ункции, —троковые‘ункции;
+
+inclass public
+
+  func —в€занный ласс«аписей: Class —»—2.Ѕазова€.Ѕазова€«апись;
+    Result = ”чет—тажа.–асчетный—таж;
+  end;
+
+  func Create: ”чет—тажа.инт–асчетный—таж;
+    var locRecord: ”чет—тажа.–асчетный—таж;
+    Result = inherited Create;
+    locRecord = ”чет—тажа.–асчетный—таж.Create;
+    Result.SetRecord(locRecord);
+  end;
+
+  func ќткрытьѕо«аписи synonym OpenRecord (locRecord: ”чет—тажа.–асчетный—таж): ”чет—тажа.инт–асчетный—таж;
+    Result = inherited Create;
+    Result.SetRecord(locRecord);
+  end;
+
+  func Ѕланк–едакторѕо”молчанию: Class BlankForm;
+    Result = ”чет—тажа.ред–асчетный—таж;
+  end;
+
+  func  артотекаѕо”молчанию: Class CardForm;
+    Result = nil;
+  end;
+
+inobject public
+
+  Record: ”чет—тажа.–асчетный—таж;
+
+  proc »нициализировать synonym Init;
+    Assert(Record.State = Kernel.Record.Created);
+  end;
+
+  proc »нициализироватьѕо”молчанию synonym InitByDefault;
+    Init;
+  end;
+
+  proc –асчет;
+    var лок”чреждение, лок‘изЋицо: Ѕазовый.ƒанные.—убъект;
+    var лок√од—ведений: integer;
+    var locFlt: string[];
+    var локмјкт–асчета: Ѕюджет_«ѕиƒƒ.–асчетныеќперации.–асчет[];
+    var p, pp, m: integer;
+    var лок—умма¬ыплат: numeric;
+    var локЅаза, _Ѕаза: numeric;
+    var лок—умма¬зносов: numeric;
+    var лок‘–—¬, ValN: numeric;
+    --
+    if not (nil in [Record.Ќаше”чреждение, Record.—убъект, Record.√од—ведений]):
+      лок”чреждение  = Record.Ќаше”чреждение;
+      лок‘изЋицо     = Record.—убъект;
+      лок√од—ведений = Record.√од—ведений;
+      with Query.Create([Ѕюджет_«ѕиƒƒ.–асчетныеќперации.–асчет]) do
+        locFlt[1] = 'Ќаше”чреждение=' + Str(лок”чреждение);
+        locFlt[1] = '—отрудник.‘излицо=' + Str(лок‘изЋицо);
+        locFlt[2] = 'SubStr(”четныйѕериод. од,1,4)="' + Str(лок√од—ведений) + '"';
+        locFlt[3] = 'ѕодшивка.«авершен';
+        locFlt[4] = '“ип–асчета=' + Str(Ѕюджет_«ѕиƒƒ. онстанты.“ип–асчета√ѕ—);
+        Filter = —ложить—троки‘ильтраѕо»(locFlt);
+        Select;
+        while not Eof do
+          if Ѕиблио.–асчет¬не—тажа(Current):
+            AddInArray(локмјкт–асчета, Current);
+            лок—умма¬ыплат = лок—умма¬ыплат + Ѕиблио.Ќачислено√онораров_¬–асчете (Current);
+            _Ѕаза = Ѕиблио.Ѕазаќпс√онораров_¬–асчете (Current);
+            локЅаза = локЅаза + _Ѕаза;
+            лок—умма¬зносов = лок—умма¬зносов + Ѕиблио.¬зносовќпс√онораров_¬–асчете (Current, _Ѕаза);
+          fi;
+          Next;
+        od;
+      end;
+      --
+      Record.¬ыплаты.Clear;
+      pp = LengthOfArray(локмјкт–асчета);
+      for p = 1 .. pp do
+        with Record.¬ыплаты.AddEx do
+          јкт–асчета = локмјкт–асчета[p];
+          —умма¬зносов = Ѕиблио.¬зносовќпс√онораров_¬–асчете (локмјкт–асчета[p], nil);
+        end;
+      od;
+      Record.—умма¬ыплат = лок—умма¬ыплат;
+      Record.Ѕаза = локЅаза;
+      Record.—умма¬зносов = лок—умма¬зносов;
+      лок‘–—¬ = Ѕиблио.‘–—¬(лок√од—ведений);
+      if (лок—умма¬зносов >= лок‘–—¬):
+        Record.ћес€цев—тажа  = 12;
+        Record.ƒатаќкончани€ = Dat(31, 12, лок√од—ведений);
+        Record.ƒатаЌачала    = Dat(1, 1, лок√од—ведений);
+      elsif (лок—умма¬зносов > 0) and  (лок—умма¬зносов < лок‘–—¬):
+        ValN = лок—умма¬зносов / (лок‘–—¬ / 12);
+        ValN = Trunc(ValN);
+        m = Int(ValN);
+        m = Max([m,1]);
+        Record.ћес€цев—тажа  = m;
+        Record.ƒатаќкончани€ = Dat(31, 12, лок√од—ведений);
+        Record.ƒатаЌачала    = Dat(1, (12 - m) + 1, лок√од—ведений);
+      fi;
+    fi;
+  end;
+
+inobject private
+
+
+end
