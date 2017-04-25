@@ -10,6 +10,7 @@ CanHGroupModify=0
 AutoOpen=1
 CanAcceptAnyRecord=0
 CanDropOnRecord=0
+OnCreateRecord=картотека_ПриСозданииЗаписи
 CaptionRows=1
 ShowSummary=0
 ShowCount=1
@@ -19,12 +20,11 @@ CanDelete=1
 CanMove=0
 CanCopy=0
 ShowRecords=0
-ColumnCount=5
+ColumnCount=4
 Column:0=НашеУчреждение.Имя
 Column:1=Субъект.Имя
 Column:2=ГодСведений
 Column:3=МесяцевСтажа
-Column:4=ДнейСтажа
 TreeVisible=0
 TreeWidth=120
 SubTableVisible=0
@@ -59,7 +59,7 @@ ManualEdit=1
 UseFont=0
 
 [.Column.Субъект.Имя]
-Caption=Субъект
+Caption=Автор (исполниель)
 Hint=Субъект
 Width=0
 MinWidth=0
@@ -99,25 +99,6 @@ UseFont=0
 [.Column.МесяцевСтажа]
 Caption=Месяцев стажа
 Hint=Месяцев расчетного стажа
-Width=65
-MinWidth=0
-Visible=1
-Editable=1
-Sortable=1
-Summary=0
-Designated=0
-Lookup=0
-Alignment=1
-ColumnType=0
-ColumnFormat=2
-FindMaskFormat=0
-FieldSize=0
-ManualEdit=0
-UseFont=0
-
-[.Column.ДнейСтажа]
-Caption=Дней стажа
-Hint=Дней расчетного стажа
 Width=65
 MinWidth=0
 Visible=1
