@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <Properties Version="1"/>
 <Items>
+  <Item Name="Константы"/>
+  <Item Name="Библио"/>
   <Item Name="КомандыУправления"/>
-  <Item Name="Документы"/>
+  <Item Name="КарточкаГонораров"/>
 </Items>

@@ -15,9 +15,13 @@ inclass public
     СтажНС3 = ЗначениеПоляОтчета(aParameter, 'л:СтажНС3');
     СтажНС4 = ЗначениеПоляОтчета(aParameter, 'л:СтажНС4');
     СтажГПС = ЗначениеПоляОтчета(aParameter, 'л:СтажГПС');
-    if not true in [СтажНС1,СтажНС2,СтажНС3,СтажНС4,СтажГПС]:
+    if not (true in [СтажНС1,СтажНС2,СтажНС3,СтажНС4,СтажГПС]):
       Result = extended Расчет(aParameter);
     else
+
+
+
+
       Result = [[nil]];
     fi;
   end;

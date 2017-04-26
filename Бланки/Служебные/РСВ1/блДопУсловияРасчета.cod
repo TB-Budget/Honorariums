@@ -7,10 +7,11 @@ inclass public
   func CreateExt: Служебные.РСВ1.блДопУсловияРасчета;
     Result = Служебные.РСВ1.блДопУсловияРасчета.Create;
   end;
-
   --}}
 
 inobject public
+
+  --{{ Свойства
 
   var Уточненение: logical;
   var НомерУточнения: integer;
@@ -21,7 +22,18 @@ inobject public
   var СтажНС3: logical;
   var СтажНС4: logical;
   var СтажГПС: logical;
+  var УточнениеСтажа: logical = (true in [СтажНС1,СтажНС2,СтажНС3,СтажНС4,СтажГПС]);
+  var ВсеСотрудники: logical = not УточнениеСтажа;
+  --}}
 
+  --{{ Обработчики событий шаблона
+
+  proc шаблон_ПриОткрытии(Create :Logical);
+    inherited шаблон_ПриОткрытии(Create);
+    Template.CellByField['УточнениеСтажа'].Enabled = false;
+    Template.CellByField['ВсеСотрудники'].Enabled = false;
+  end;
+  --}}
 
   --{{ Обработчики событий клеток шаблона
 
