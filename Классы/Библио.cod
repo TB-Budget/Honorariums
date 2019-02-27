@@ -129,7 +129,24 @@ inclass public
     var локДатаЗапроса: date;
     if (локГод > nil):
       локДатаЗапроса = Dat(1, 1, локГод);
-      Result = Round((Бюджет_ЗПиДД.Библио.СуммаМРОТ(локДатаЗапроса) * 0.26 * 12), 2);
+      Result = Round((РеглКонстанта('МРОТ', локДатаЗапроса) * 0.26 * 12), 2);
     fi;
   end;
+
+inclass private
+
+  func РеглКонстанта (locName: string; locDate: date): numeric;
+    Result = 0;
+    if not (nil in [locName,locDate]):
+      with Query.Create([Kernel.Vars.Float]) do
+        Filter = '(Переменная = "' + locName +'") and (Дата <= ' + Str(locDate) + ')';
+        Order = 'Дата-';
+        Select;
+        if RecordsExists:
+          Return Current.Значение;
+        fi;
+      end;
+    fi;
+  end;
+
 end

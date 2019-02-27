@@ -22,7 +22,7 @@ inobject private
     locSectionData = locFrameRecipient.AddSection;
     locSectionData.Assign(locSectionDonor);
     if (locRowsCount > 1):
-      CloneFirstRow(locSectionData, locRowsCount);
+      CloneFirstRows(locSectionData, locRowsCount);
     fi;
     Return locSectionData;
   end;
@@ -124,6 +124,10 @@ inobject private
   end;
 
   proc шаблон_ПриСчитывании;
+    if ВидОдинЛист:
+      ВидОдинЛист = false;
+      ВидФормы;
+    fi;
     inherited шаблон_ПриСчитывании;
     МодифициоватьШаблон;
   end;
@@ -134,14 +138,16 @@ inobject private
   func Поле_ПриНажатии (Cell: TemplateCell; Action: Template.ClickTypes): Logical;
     if (Cell.Owner.Name = 'секцУчреждение') and (Cell.Contents = '...'):
       if (НашеУчреждение <> nil):
-        Бюджет_ЗПиДД.Справочники.Субъект.РедНашеУчреждение.Create.ShowEx(НашеУчреждение, Window.ModalWindow);
+        --Бюджет_ЗПиДД.Справочники.Субъект.РедНашеУчреждение.Create.ShowEx(НашеУчреждение, Window.ModalWindow);
+        Бюджет_ЗПиДД.Справочники.Субъект.редКонтрагентР.Create.ShowEx(НашеУчреждение, Window.ModalWindow);
       fi;
     elsif (Cell.Owner.Name = 'секцСотрудник') and (Cell.Contents = 'q'):
       Интерфейс.ВычислитьДанные;
       МодифициоватьШаблон_Стр1;
     elsif (Cell.Owner.Name = 'секцСотрудник') and (Cell.Contents = '...'):
       if (Субъект <> nil):
-        Бюджет_ЗПиДД.Справочники.Субъект.РедСотрудник.Create.ShowEx(Субъект, Window.ModalWindow);
+        --Бюджет_ЗПиДД.Справочники.Субъект.РедСотрудник.Create.ShowEx(Субъект, Window.ModalWindow);
+        Бюджет_ЗПиДД.Справочники.Субъект.редСотрудникР.Create.ShowEx(Субъект, Window.ModalWindow);
       fi;
     fi;
   end;
@@ -240,8 +246,7 @@ inobject private
   func ПолеРасчеты_ПриВыводе (Cell: TemplateCell; Value: Variant; Action: Template.OutputTypes; var Format: String): Variant;
     var локТегСтроки: КарточкаГонораров.клТегСтроки;
     if (Action = Template.Output):
-      локТегСтроки = Cell.Owner.Row[Cell.Row].Tag;
-      if (локТегСтроки is КарточкаГонораров.клТегСтроки):
+      if (Cell.Owner.Row[Cell.Row].Tag is КарточкаГонораров.клТегСтроки):
         локТегСтроки = Cell.Owner.Row[Cell.Row].Tag as КарточкаГонораров.клТегСтроки;
         if (Cell.Contents = 'Расчеты.Месяц'):
           Return локТегСтроки.МесяцГод as string;
@@ -296,7 +301,8 @@ inobject private
     else
       locChoose = Enquiry(, 'Выберите действие:', ['Просмотр карточки сотрудника ' + Субъект.ФамилияФизлица + ' ' + Субъект.ИмяФизЛица + ' ' + Субъект.ОтчествоФизЛица, 'Выбрать другого сотрудника' ]);
       if (locChoose = 1):
-        Бюджет_ЗПиДД.Справочники.Субъект.РедСотрудник.Create.ShowEx(Субъект, Window.ModalWindow);
+        --Бюджет_ЗПиДД.Справочники.Субъект.РедСотрудник.Create.ShowEx(Субъект, Window.ModalWindow);
+        Бюджет_ЗПиДД.Справочники.Субъект.редСотрудникР.Create.ShowEx(Субъект, Window.ModalWindow);
       elsif (locChoose = 2):
         ВыборСотрудника;
       fi;
